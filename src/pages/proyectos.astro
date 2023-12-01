@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+---
+
+<Layout>
+	<div slot="article" class="w-full flex justify-center" 
+  style="background-image: url('/Fondo2.png');"
+  dark:bg-blue-500 dark:text-white mt-5 mb-5>
+		<div id="memorama">
+			<div class="fila">
+			  <img id="card0" src='/Tapadera carta.jpg' onclick="voltearCarta(0);">
+			  <img id="card1" src="/Tapadera carta.jpg" onclick="voltearCarta(1);">
+			  <img id="card2" src="/Tapadera carta.jpg" onclick="voltearCarta(2);">
+			  <img id="card3" src="/Tapadera carta.jpg" onclick="voltearCarta(3);">
+			</div>
+			<div class="fila">
+			  <img id="card4" src="/Tapadera carta.jpg" onclick="voltearCarta(4);">
+			  <img id="card5" src="/Tapadera carta.jpg" onclick="voltearCarta(5);">
+			  <img id="card6" src="/Tapadera carta.jpg" onclick="voltearCarta(6);">
+			  <img id="card7" src="/Tapadera carta.jpg" onclick="voltearCarta(7);">
+			</div>
+			<div class="fila">
+			  <img id="card8" src="/Tapadera carta.jpg" onclick="voltearCarta(8);">
+			  <img id="card9" src="/Tapadera carta.jpg" onclick="voltearCarta(9);">
+			  <img id="card10" src="/Tapadera carta.jpg" onclick="voltearCarta(10);">
+			  <img id="card11" src="/Tapadera carta.jpg" onclick="voltearCarta(11);">
+			</div>
+		  </div>
+	</div>
+</Layout>
+
+<script lang="js">
+	  let imgArr = [
+    "/Biyomon.jpg",
+    "/Digimon_Adventure.jpg",
+    "/Gabumon.jpg",
+    "/imagen1.jpg",
+    "/Tentamon1.jpg",
+    "/Terrimon.jpg",
+    "/Biyomon.jpg",
+    "/Digimon_Adventure.jpg",
+    "/Gabumon.jpg",
+    "/imagen1.jpg",
+    "/Tentamon1.jpg",
+    "/Terrimon.jpg"
+  ];
+
+  let numsA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+  shuffle(numsA);
+
+  let CartaVolteada = [];
+  let ContadorDeClicks = [];
+  let Fin = 0;
+  let contadorCV = 0;
+
+  function voltearCarta(p) {
+    document.getElementById("card" + p).src = imgArr[numsA[p]];
+    CartaVolteada.push(document.getElementById("card" + p).src);
+    ContadorDeClicks.push(document.getElementById("card" + p).id);
+    if (CartaVolteada.length == 2) {
+      setTimeout(() => {
+        if (CartaVolteada[0] != CartaVolteada[1]) {
+          document.getElementById(ContadorDeClicks[0]).src = "/Tapadera carta.jpg";
+          document.getElementById(ContadorDeClicks[1]).src = "/Tapadera carta.jpg";
+        } else {
+          Fin += 2;
+          ganar();
+        }
+        CartaVolteada = [];
+        ContadorDeClicks = [];
+      }, 300);
+    }
+  }
+
+  function ganar() {
+    if (Fin == 12) {
+      Fin = 0;
+      contadorCV++;
+      setTimeout(() => {
+        for (let i = 0; i < 12; i++) {
+          document.getElementById("card" + i).src = "/Tapadera carta.jpg";
+        }
+      }, 999);
+      shuffle(numsA);
+    }
+  }
+
+  function shuffle(array) {
+    let i = array.length,
+        j, temp;
+    while (--i > 0) {
+      j = Math.floor(Math.random() * (i + 1));
+      temp = array[j];
+      array[j] = array[i];
+      array[i] = temp;
+    }
+  }
+  </script>
+
+<style>
+	.fila {
+	  display: flex;
+	}
+  
+	.fila img {
+		width: 150px;
+  		height: 175px;
+  		margin: 5px;
+ 		border: 5px solid rgb(32, 30, 32); 
+	}
+	img:hover{
+  		transform: scale(1.10, 1.10);
+	}
+  </style>
+
